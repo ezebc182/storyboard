@@ -10,11 +10,14 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
-	public function index(){
-		echo 'Listado de usuarios';
-		exit();
+	public function index()
+	{
+		$users = $this->paginate($this->Users);
+		$this->set("users",$users);
+
 	}
-	public function view($value){
+	public function view($value)
+	{
 		echo 'Detalle de usuario: '.$value;
 		exit();
 	}
