@@ -10,7 +10,9 @@
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "*",
-        "fzaninotto/faker": "^1.6"
+        "fzaninotto/faker": "^1.6",
+        "friendsofcake/bootstrap-ui": "^0.5.1",
+        "twbs/bootstrap": "^3.3"
     },
     "require-dev": {
         "psy/psysh": "@stable",

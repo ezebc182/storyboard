@@ -1,47 +1,45 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Stories'), ['controller' => 'Stories', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Story'), ['controller' => 'Stories', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="users index large-9 medium-8 columns content">
-    <h3><?= __('Users') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('first_name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('last_name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('email') ?></th>
-           
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($users as $user): ?>
-            <tr>
-                <td><?= $this->Number->format($user->id) ?></td>
-                <td><?= h($user->first_name) ?></td>
-                <td><?= h($user->last_name) ?></td>
-                <td><?= h($user->email) ?></td>
-              
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header">Usuarios</h2>
+    </div>
+    <div class="">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th><?= $this->Paginator->sort("id") ?></th>
+                    <th><?= $this->Paginator->sort("first_name", ["Nombre"]) ?></th>
+                    <th><?= $this->Paginator->sort("last_name" , ["Apellido"]) ?></th>
+                    <th><?= $this->Paginator->sort("email" , ["Correo electrónico"]) ?></th>
+                    <th><?= $this->Paginator->sort("role", ["Rol"]) ?></th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($users as $user): ?>
+                    <tr>
+                        <td><?= $this->Number->format($user->id) ?></td>
+                        <td><?= h($user->first_name) ?> </td>
+                        <td><?= h($user->last_name) ?></td>
+                        <td><?= h($user->email) ?> </td>
+                        <td><?= ($user->role==='admin')? "<span class='label label-success'>"
+                        .h($user->role). "</span>"
+                        :"<span class='label label-warning'>".h($user->role). "</span>" ?></td>
+                        <td>
+                            <?= $this->Html->link("<i class='fa fa-eye fa-fw'></i>",["action" =>"view",$user->id],["class"=>"btn btn-sm btn-default", "escape"=>false]) ?>
+                            <?= $this->Html->link("<i class='fa fa-edit fa-fw'></i>",["action" =>"edit",$user->id],["class"=>"btn btn-sm btn-primary", "escape"=>false]) ?>
+                            <?= $this->Form->postLink("<i class='fa fa-trash fa-fw'></i>",["action"=>"delete",$user->id],["confirm"=>"¿Eliminar el usuario ". $user->first_name." ".$user->last_name."?","class"=>"btn btn-sm btn-danger", "escape"=>false]) ?>
+                        </td>
+                    </tr>
+                <?php endforeach;?>
+            </tbody>
+        </table>
+    </div>
     <div class="paginator">
         <ul class="pagination">
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
+            <?= $this->Paginator->prev("< ".__("Anterior"))?>
+            <?= $this->Paginator->numbers(["before"=>"","after"=>""]) ?>
+            <?= $this->Paginator->next(__("Siguiente")." >")?>
         </ul>
-        <p><?= $this->Paginator->counter() ?></p>
+        <p><?= $this->Paginator->counter()?></p>
     </div>
 </div>
