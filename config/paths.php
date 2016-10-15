@@ -18,7 +18,7 @@
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
-
+define('APP_NAME','StoryBoard');
 /**
  * These defines should only be edited if you have cake installed in
  * a directory layout other than the way it is distributed.

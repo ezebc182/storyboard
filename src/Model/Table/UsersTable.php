@@ -99,4 +99,17 @@ class UsersTable extends Table
 
         return $rules;
     }
+    /**
+     * Retorna el id, email, password, first_name, last_name y role de usuarios activos.
+     * @param  \Cake\ORM\Query $query   [description]
+     * @param  array           $options [description]
+     * @return \Cake\ORM\Query          [description]
+     */
+    public function findAuth(\Cake\ORM\Query $query, array $options)
+    {
+        $query->select(['id','first_name','last_name','email','password','role'])
+              ->where(['Users.active' => 1]);
+
+            return $query;
+    }
 }

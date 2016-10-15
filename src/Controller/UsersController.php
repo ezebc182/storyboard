@@ -10,16 +10,66 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
+	public function beforeFilter(\Cake\Event\Event $event)
+	{
+		parent::beforeFilter($event);
+		$this->Auth->allow(['add']);
+	}
+	public function isAuthorized($user)
+	{
+		if(isset($user['role']) and $user['role'] ==='user')
+		{
+			if(in_array($this->request->action,['home','logout','view']))
+			{
+				return true;
+			}
+			return parent::isAuthorized($user);
+		}
+		elseif(isset($user['role']) and $user['role'] ==='admin')
+		{
+			if(in_array($this->request->action,['home','add','index','logout','view']))
+			{
+				return true;
+			}
+			return parent::isAuthorized($user);
+
+		}
+	}
+	public function login()
+	{
+		if($this->request->is('post'))
+		{
+			$user = $this->Auth->identify();
+			if($user)
+			{
+				$this->Auth->setUser($user);
+				return $this->redirect($this->Auth->redirectUrl());
+			}
+			else
+			{
+				$this->Flash->error("Usuario y/o contraseña inválidos.", ['key' => 'auth']);
+			}
+		};
+	}
+	public function logout()
+	{
+		return $this->redirect($this->Auth->logout());
+	}
 	public function index()
 	{
 		$users = $this->paginate($this->Users);
 		$this->set("users",$users);
 
 	}
-	public function view($value)
+	public function home()
 	{
-		echo 'Detalle de usuario: '.$value;
-		exit();
+
+		$this->render();
+	}
+	public function view($id)
+	{
+		$user = $this->Users->get($id);
+		$this->set("user",$user);
 	}
 	public function add()
 	{
@@ -28,10 +78,12 @@ class UsersController extends AppController
 		if($this->request->is("post"))
 		{
 			$user = $this->Users->patchEntity($user,$this->request->data);
+			$user->active = 1;
+			$user->role = 'user';
 			if($this->Users->save($user))
 			{
 				$this->Flash->success("El usuario ha sido creado.");
-				return $this->redirect(["controller"=>"Users","action"=>"index"]);
+				return $this->redirect(["controller"=>"Users","action"=>"login"]);
 			}
 			else
 			{

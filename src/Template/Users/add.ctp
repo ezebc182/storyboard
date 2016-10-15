@@ -10,8 +10,6 @@
             echo $this->Form->input("last_name",["label"=>"Apellido"]);
             echo $this->Form->input("email");
             echo $this->Form->input("password");
-            echo $this->Form->input("role",["options"=>["admin"=>"Administrador","user"=>"Usuario"]]);
-            echo $this->Form->input("active");
 
             ?>
         </fieldset>
