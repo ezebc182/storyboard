@@ -10,7 +10,8 @@
                     <th><?= $this->Paginator->sort("first_name", ["Nombre"]) ?></th>
                     <th><?= $this->Paginator->sort("last_name" , ["Apellido"]) ?></th>
                     <th><?= $this->Paginator->sort("email" , ["Correo electrónico"]) ?></th>
-                    <th><?= $this->Paginator->sort("role", ["Rol"]) ?></th>
+                    <th><?= $this->Paginator->sort("role" , ["Rol"]) ?></th>
+                    <th><?= $this->Paginator->sort("active", ["Estado"]) ?></th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -21,9 +22,9 @@
                         <td><?= h($user->first_name) ?> </td>
                         <td><?= h($user->last_name) ?></td>
                         <td><?= h($user->email) ?> </td>
-                        <td><?= ($user->role==='admin')? "<span class='label label-success'>"
-                        .h($user->role). "</span>"
-                        :"<span class='label label-warning'>".h($user->role). "</span>" ?></td>
+                        <td><?= h(ucfirst($user->role)) ?></td>
+                        <td><?= ($user->active==1)? "<span class='label label-success'>Activo</span>"
+                        :"<span class='label label-warning'>Inactivo</span>" ?></td>
                         <td>
                             <?= $this->Html->link("<i class='fa fa-eye fa-fw'></i>",["action" =>"view",$user->id],["class"=>"btn btn-sm btn-default", "escape"=>false]) ?>
                             <?= $this->Html->link("<i class='fa fa-edit fa-fw'></i>",["action" =>"edit",$user->id],["class"=>"btn btn-sm btn-primary", "escape"=>false]) ?>

@@ -5,7 +5,6 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-
 /**
  * Users Model
  *
@@ -42,7 +41,7 @@ class UsersTable extends Table
 
         $this->hasMany('Stories', [
             'foreignKey' => 'user_id'
-        ]);
+            ]);
     }
 
     /**
@@ -54,34 +53,37 @@ class UsersTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+        ->integer('id')
+        ->allowEmpty('id', 'create');
 
         $validator
-            ->requirePresence('first_name', 'create')
-            ->notEmpty('first_name');
+        ->requirePresence('first_name', 'create')
+        ->notEmpty('first_name','Complete este campo');
 
         $validator
-            ->requirePresence('last_name', 'create')
-            ->notEmpty('last_name');
+        ->requirePresence('last_name', 'create')
+        ->notEmpty('last_name','Complete este campo');
 
         $validator
-            ->email('email')
-            ->requirePresence('email', 'create')
-            ->notEmpty('email');
+        ->notEmpty('email','Complete este campo.')
+        ->requirePresence('email','create')
+        ->add('email', 'validFormat', [
+            'rule' => 'email',
+            'message' => 'Ingrese un correo electrónico válido.'
+            ]);
+        
+        $validator
+        ->requirePresence('password', 'create')
+        ->notEmpty('password','Complete este campo','create');
 
         $validator
-            ->requirePresence('password', 'create')
-            ->notEmpty('password');
+        ->requirePresence('role', 'create')
+        ->notEmpty('role');
 
         $validator
-            ->requirePresence('role', 'create')
-            ->notEmpty('role');
-
-        $validator
-            ->boolean('active')
-            ->requirePresence('active', 'create')
-            ->notEmpty('active');
+        ->boolean('active')
+        ->requirePresence('active', 'create')
+        ->notEmpty('active');
 
         return $validator;
     }
@@ -108,8 +110,25 @@ class UsersTable extends Table
     public function findAuth(\Cake\ORM\Query $query, array $options)
     {
         $query->select(['id','first_name','last_name','email','password','role'])
-              ->where(['Users.active' => 1]);
+        ->where(['Users.active' => 1]);
 
-            return $query;
+        return $query;
+    }
+
+    public function recoverPassword($id)
+    {
+        $user = $this->get($id);
+        return $user->password;
+
+    }
+
+    public function beforeDelete($event, $entity, $options)
+    {
+
+        if($entity->role == 'admin')
+        {
+            return false;    
+        }
+        return true;
     }
 }

@@ -49,7 +49,11 @@ class UsersController extends AppController
 			{
 				$this->Flash->error("Usuario y/o contraseña inválidos.", ['key' => 'auth']);
 			}
-		};
+		}
+		if($this->Auth->user())
+		{
+			return $this->redirect(["controller"=>"Users","action"=>"home"]);
+		}
 	}
 	public function logout()
 	{
@@ -91,5 +95,39 @@ class UsersController extends AppController
 			}
 		}
 		$this->set(compact("user"));
+	}
+	public function edit($id=null)
+	{
+		$user = $this->Users->get($id);
+		$this->set(compact('user'));
+		if($this->request->is(['patch','post','put']))
+		{
+			$user = $this->Users->patchEntity($user,$this->request->data);
+			if ($this->Users->save($user)) {
+				$this->Flash->success("El usuario ha sido modificado");
+				return $this->redirect(["action" => "index"]);
+			}
+			else{
+				$this->Flash->error("El usuario no pudo ser modificado. Por favor intente nuevamente.");
+			}
+		}
+	}
+
+	public function delete ($id = null)
+	{
+		if($this->request->allowMethod(["post","delete"]))
+		{
+			$user = $this->Users->get($id);
+			if($this->Users->delete($user))
+			{
+				$this->Flash->success("El usuario ha sido eliminado");
+			}
+			else
+			{
+				$this->Flash->error("El usuario no pudo ser eliminado. Por favor intente nuevamente.");
+
+			}
+			return $this->redirect(["action" => "index"]);
+		}
 	}
 }
