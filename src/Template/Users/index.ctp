@@ -24,23 +24,23 @@
                         <td><?= h($user->email) ?> </td>
                         <td><?= h(ucfirst($user->role)) ?></td>
                         <td><?= ($user->active==1)? "<span class='label label-success'>Activo</span>"
-                        :"<span class='label label-warning'>Inactivo</span>" ?></td>
-                        <td>
-                            <?= $this->Html->link("<i class='fa fa-eye fa-fw'></i>",["action" =>"view",$user->id],["class"=>"btn btn-sm btn-default", "escape"=>false]) ?>
-                            <?= $this->Html->link("<i class='fa fa-edit fa-fw'></i>",["action" =>"edit",$user->id],["class"=>"btn btn-sm btn-primary", "escape"=>false]) ?>
-                            <?= $this->Form->postLink("<i class='fa fa-trash fa-fw'></i>",["action"=>"delete",$user->id],["confirm"=>"¿Eliminar el usuario ". $user->first_name." ".$user->last_name."?","class"=>"btn btn-sm btn-danger", "escape"=>false]) ?>
-                        </td>
-                    </tr>
-                <?php endforeach;?>
-            </tbody>
-        </table>
+                            :"<span class='label label-warning'>Inactivo</span>" ?></td>
+                            <td>
+                                <?= $this->Html->link("<i class='fa fa-eye fa-fw'></i>",["action" =>"view",$user->id],["class"=>"btn btn-sm btn-default", "escape"=>false]) ?>
+                                <?= $this->Html->link("<i class='fa fa-edit fa-fw'></i>",["action" =>"edit",$user->id],["class"=>"btn btn-sm btn-primary", "escape"=>false]) ?>
+                                <?= $this->Form->postLink("<i class='fa fa-trash fa-fw'></i>",["action"=>"delete",$user->id],["confirm"=>"¿Eliminar el usuario ". $user->first_name." ".$user->last_name."?","class"=>"btn btn-sm btn-danger", "escape"=>false]) ?>
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
+                </tbody>
+            </table>
+            <div class="paginator">
+                <ul class="pagination">
+                    <?= $this->Paginator->prev("< ".__("Anterior"))?>
+                    <?= $this->Paginator->numbers(["before"=>"","after"=>""]) ?>
+                    <?= $this->Paginator->next(__("Siguiente")." >")?>
+                </ul>
+                <p><?= $this->Paginator->counter()?></p>
+            </div>
+        </div>
     </div>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->prev("< ".__("Anterior"))?>
-            <?= $this->Paginator->numbers(["before"=>"","after"=>""]) ?>
-            <?= $this->Paginator->next(__("Siguiente")." >")?>
-        </ul>
-        <p><?= $this->Paginator->counter()?></p>
-    </div>
-</div>

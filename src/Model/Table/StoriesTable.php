@@ -60,15 +60,15 @@ class StoriesTable extends Table
 
         $validator
             ->requirePresence('title', 'create')
-            ->notEmpty('title');
+            ->notEmpty('title','Complete este campo.');
 
         $validator
             ->requirePresence('description', 'create')
-            ->notEmpty('description');
+            ->notEmpty('description','Complete este campo.');
 
         $validator
             ->requirePresence('complexity', 'create')
-            ->notEmpty('complexity');
+            ->notEmpty('complexity','Complete este campo.');
 
         return $validator;
     }

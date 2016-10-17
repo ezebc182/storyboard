@@ -1,5 +1,5 @@
 <div class="well">
-	<h2>Detalle de usuario</h2>
+	<h1 class="page-header">Detalle de usuario</h1>
 
 	<dl>
 		<dt>Nombre</dt>

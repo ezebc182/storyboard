@@ -47,7 +47,7 @@ class UsersController extends AppController
 			}
 			else
 			{
-				$this->Flash->error("Usuario y/o contraseña inválidos.", ['key' => 'auth']);
+				$this->Flash->error("Usuario y/o contraseña incorrectos.", ['key' => 'auth']);
 			}
 		}
 		if($this->Auth->user())

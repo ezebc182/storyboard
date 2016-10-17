@@ -15,32 +15,39 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <?php if(isset($current_user)):?>
-       
-        <ul class="nav navbar-nav">
-            <?php if($current_user['role'] ==='admin'):?>
 
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuarios <span class="caret"></span></a>
+        <ul class="nav navbar-nav navbar-left">
+          <?php if($current_user['role'] ==='admin'):?>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuarios <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><?= $this->Html->link("Listar",["controller"=>"Users","action"=>"index"])?>
-                  <li><?= $this->Html->link("Agregar",["controller"=>"Users","action"=>"add"])?>
-
-                  </ul>
-                </li>
+                <li><?= $this->Html->link("<i class='fa fa-list fa-fw'></i> Listar",["controller"=>"Users","action"=>"index"],["escape" => false])?></li>
+                <li><?= $this->Html->link("<i class='fa fa-plus fa-fw'></i> Agregar",["controller"=>"Users","action"=>"add"],["escape" => false])?></li>
               </ul>
+
             </li>
           <?php endif;?>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $current_user['email']?> <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><?= $this->Html->link('Salir',['controller'=>'Users','action'=>'logout']) ?></li>
-              </ul>
-            </li>
-          </ul>
+          
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Historias<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><?= $this->Html->link("<i class='fa fa-list fa-fw'></i> Listar",["controller"=>"Stories","action"=>"index"],["escape" => false])?></li>
+              <li><?= $this->Html->link("<i class='fa fa-plus fa-fw'></i> Agregar",["controller"=>"Stories","action"=>"add"],["escape" => false])?></li>
+            </ul>
+          </li>
+        </ul>         
+        <ul class="nav navbar-nav navbar-right" >
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $current_user['email']?> <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><?= $this->Html->link('<i class="fa fa-power-off fa-fw"></i> Cerrar sesión',['controller'=>'Users','action'=>'logout'],["escape" => false]) ?></li>
+            </ul>
+          </li>
         </ul>
 
-      <?php endif;?>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+      </ul>
+
+    <?php endif;?>
+  </div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
 </nav>
